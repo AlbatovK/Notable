@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/NoteListFragment">
+
+    <fragment
+        android:id="@+id/NoteListFragment"
+        android:name="com.albatros.notable.ui.fragments.list.NoteListFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_list">
+
+        <action
+            android:id="@+id/action_NoteListFragment_to_NoteDetailFragment"
+            app:destination="@id/NoteDetailFragment" />
+
+        <action
+            android:id="@+id/action_NoteListFragment_to_CreatorFragment"
+            app:destination="@id/CreatorFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/NoteDetailFragment"
+        android:name="com.albatros.notable.ui.fragments.detail.NoteDetailFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_detail">
+
+        <action
+            android:id="@+id/action_NoteDetailFragment_to_NoteListFragment"
+            app:destination="@id/NoteListFragment" />
+
+        <argument
+            android:name="arg"
+            app:argType="com.albatros.notable.model.data.Note" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreatorFragment"
+        android:name="com.albatros.notable.ui.fragments.creator.CreatorFragment"
+        android:label="@string/creator_fragment_label"
+        tools:layout="@layout/fragment_creator">
+
+        <action
+            android:id="@+id/action_CreatorFragment_to_NoteListFragment"
+            app:destination="@id/NoteListFragment" />
+
+    </fragment>
+
+</navigation>

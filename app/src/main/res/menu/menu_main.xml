@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.albatros.notable.ui.activities.MainActivity">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add"
+        android:orderInCategory="0"
+        android:title="@string/new_hint"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_exit"
+        android:icon="@drawable/ic_exit"
+        android:orderInCategory="1"
+        android:title="@string/exit_hint"
+        app:showAsAction="ifRoom" />
+</menu>

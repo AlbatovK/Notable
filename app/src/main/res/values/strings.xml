@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Notable</string>
+    <string name="first_fragment_label">List of notes</string>
+    <string name="second_fragment_label">Note details</string>
+    <string name="creator_fragment_label">Creating new note</string>
+    <string name="new_hint">New</string>
+    <string name="exit_hint">Exit</string>
+    <string name="must_hint">You must enter title</string>
+</resources>
