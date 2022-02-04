@@ -38,7 +38,9 @@ class NoteDetailFragment : Fragment() {
             true
         }
         R.id.action_change -> {
-
+            val direction = NoteDetailFragmentDirections
+                .actionNoteDetailFragmentToUpdaterFragment(arguments.arg)
+            findNavController().navigate(direction)
             true
         } else -> false
     }

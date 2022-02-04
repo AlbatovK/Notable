@@ -31,6 +31,10 @@
             android:id="@+id/action_NoteDetailFragment_to_NoteListFragment"
             app:destination="@id/NoteListFragment" />
 
+        <action
+            android:id="@+id/action_NoteDetailFragment_to_UpdaterFragment"
+            app:destination="@id/UpdaterFragment"/>
+
         <argument
             android:name="arg"
             app:argType="com.albatros.notable.model.data.Note" />
@@ -46,6 +50,22 @@
         <action
             android:id="@+id/action_CreatorFragment_to_NoteListFragment"
             app:destination="@id/NoteListFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/UpdaterFragment"
+        android:name="com.albatros.notable.ui.fragments.updater.UpdaterFragment"
+        android:label="@string/updater_fragment_label"
+        tools:layout="@layout/fragment_updater">
+
+        <action
+            android:id="@+id/action_UpdaterFragment_to_NoteDetailFragment"
+            app:destination="@id/NoteDetailFragment" />
+
+        <argument
+            android:name="arg"
+            app:argType="com.albatros.notable.model.data.Note"/>
 
     </fragment>
 

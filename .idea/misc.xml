@@ -16,11 +16,13 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_first.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_second.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_updater.xml" value="0.1598731884057971" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/layout.xml" value="0.14492753623188406" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/note_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/menu/menu_creator.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/menu/menu_detail.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/menu/menu_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/menu/menu_updater.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

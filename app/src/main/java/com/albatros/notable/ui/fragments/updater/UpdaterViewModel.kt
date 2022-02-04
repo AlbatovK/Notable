@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 
 class UpdaterViewModel(private val repo: MainRepository) : ViewModel() {
 
-    private val _inputValid: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val _inputValid: MutableLiveData<Note?> = MutableLiveData<Note?>()
 
-    val inputValid: LiveData<Boolean> = _inputValid
+    val inputValid: LiveData<Note?> = _inputValid
 
-    fun updateNote(note: Note, title: String?, description: String?) {
+    fun processNote(note: Note, title: String?, description: String?) {
         val valid = isEntryValid(title, description)
         _inputValid.value = if (valid) {
             val new = note.copy().apply {
@@ -24,7 +24,7 @@ class UpdaterViewModel(private val repo: MainRepository) : ViewModel() {
                 this.data = description!!
             }
             viewModelScope.launch(Dispatchers.Main) { repo.updateNote(new) }
-            true
-        } else false
+            new
+        } else null
     }
 }
