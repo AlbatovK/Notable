@@ -6,6 +6,7 @@ import android.transition.TransitionInflater
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -61,7 +62,8 @@ class UpdaterFragment : Fragment() {
                 titleEditText.clearFocus()
                 descriptionEditText.clearFocus()
                 hideKeyboard()
-                findNavController().popBackStack()
+                val direction = UpdaterFragmentDirections.actionUpdaterFragmentToNoteDetailFragment(it)
+                findNavController().navigate(direction)
             } else {
                 val isTitle = titleEditText.text.isNullOrEmpty()
                 val missingTextView = if (isTitle) titleEditText else descriptionEditText

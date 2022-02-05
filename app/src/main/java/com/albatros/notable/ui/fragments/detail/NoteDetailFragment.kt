@@ -9,13 +9,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentDetailBinding
+import com.albatros.notable.ui.activities.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NoteDetailFragment : Fragment() {
+class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
 
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModel()
     private val arguments by navArgs<NoteDetailFragmentArgs>()
+
+    override fun onBackPressed(): Boolean {
+        val direction = NoteDetailFragmentDirections.actionNoteDetailFragmentToNoteListFragment()
+        findNavController().navigate(direction)
+        return true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +44,11 @@ class NoteDetailFragment : Fragment() {
             findNavController().navigate(direction)
             true
         }
+        android.R.id.home -> {
+            val direction = NoteDetailFragmentDirections.actionNoteDetailFragmentToNoteListFragment()
+            findNavController().navigate(direction)
+            true
+        }
         R.id.action_change -> {
             val direction = NoteDetailFragmentDirections
                 .actionNoteDetailFragmentToUpdaterFragment(arguments.arg)
@@ -44,6 +56,8 @@ class NoteDetailFragment : Fragment() {
             true
         } else -> false
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

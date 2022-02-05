@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
+    interface IOnBackPressed {
+        fun onBackPressed(): Boolean
+    }
+
     override fun onUserInteraction() {
         super.onUserInteraction()
         setWindowState()
@@ -36,6 +40,11 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+    }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+        if (fragment is IOnBackPressed) fragment.onBackPressed() else super.onBackPressed()
     }
 
     override fun onSupportNavigateUp(): Boolean {
