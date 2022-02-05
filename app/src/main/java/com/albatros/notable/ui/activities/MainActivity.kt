@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -43,8 +44,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
-        if (fragment is IOnBackPressed) fragment.onBackPressed() else super.onBackPressed()
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val res = fragment.childFragmentManager.fragments.lastOrNull()
+        if (res is IOnBackPressed) res.onBackPressed() else super.onBackPressed()
     }
 
     override fun onSupportNavigateUp(): Boolean {

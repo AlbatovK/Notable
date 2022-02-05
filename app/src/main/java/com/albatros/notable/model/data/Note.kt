@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.albatros.notable.domain.DateConverter
+import com.albatros.notable.domain.getRandomColor
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -19,6 +20,8 @@ data class Note(
     var data: String = "",
     @ColumnInfo(name = "date")
     var date: Date = Date(),
+    @ColumnInfo(name = "color")
+    var color: Int = getRandomColor(),
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long = 0,

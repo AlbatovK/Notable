@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentListBinding
+import com.albatros.notable.domain.safeNavigate
 import com.albatros.notable.model.data.Note
 import com.albatros.notable.ui.adapters.NoteAdapter
 import com.albatros.notable.ui.adapters.NoteAdapterListener
@@ -35,7 +36,8 @@ class NoteListFragment : Fragment() {
             val extras = FragmentNavigatorExtras(view to note.id.toString())
             val direction = NoteListFragmentDirections
                 .actionNoteListFragmentToNoteDetailFragment(note)
-            findNavController().navigate(direction, extras)
+            /* On uncertain occasions destination isn't accessible */
+            findNavController().safeNavigate(direction, extras)
         }
     }
 

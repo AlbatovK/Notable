@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.albatros.notable.databinding.NoteLayoutBinding
-import com.albatros.notable.domain.getRandomColor
 import com.albatros.notable.model.data.Note
 
 class NoteAdapter(
@@ -36,13 +35,15 @@ class NoteAdapter(
             note?.let {
                 with(binding) {
                     ViewCompat.setTransitionName(cardView, note.id.toString())
-                    cardView.setCardBackgroundColor(getRandomColor(root.context))
+                    cardView.setCardBackgroundColor(note.color)
 
                     title.text = note.title
                     description.text = note.data
 
                     root.setOnClickListener {
-                        listener.onNoteSelected(note, it)
+                        try {
+                            listener.onNoteSelected(note, it)
+                        } catch (e: IllegalArgumentException) {}
                     }
                 }
             }

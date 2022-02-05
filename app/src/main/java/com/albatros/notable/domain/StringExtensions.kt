@@ -1,3 +1,7 @@
 package com.albatros.notable.domain
 
-fun isEntryValid(vararg args: String?) = args.all { !it.isNullOrEmpty()  }
+import android.graphics.Color
+
+fun isEntryValid(vararg args: String?) = args.all { !it.isNullOrEmpty() }
+
+fun String.toColor() = Color.parseColor(this)
