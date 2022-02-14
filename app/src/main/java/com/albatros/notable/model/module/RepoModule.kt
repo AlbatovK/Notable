@@ -4,5 +4,5 @@ import com.albatros.notable.model.repo.MainRepository
 import org.koin.dsl.module
 
 val repoModule = module {
-    single { MainRepository(get()) }
+    single { MainRepository(get(), get()) }
 }

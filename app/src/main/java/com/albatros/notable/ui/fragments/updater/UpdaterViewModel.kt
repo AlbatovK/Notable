@@ -20,8 +20,8 @@ class UpdaterViewModel(private val repo: MainRepository) : ViewModel() {
         val valid = isEntryValid(title, description)
         _inputValid.value = if (valid) {
             val new = note.copy().apply {
-                this.title = title!!
-                this.data = description!!
+                this.title = title!!.trim()
+                this.data = description!!.trim()
             }
             viewModelScope.launch(Dispatchers.Main) { repo.updateNote(new) }
             new

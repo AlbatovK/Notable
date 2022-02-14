@@ -42,6 +42,11 @@ class CreatorFragment : Fragment() {
         R.id.action_create -> {
             sendNoteData()
             true
+        }
+        android.R.id.home -> {
+            val direction = CreatorFragmentDirections.actionCreatorFragmentToNoteListFragment()
+            findNavController().navigate(direction)
+            true
         } else -> false
     }
 

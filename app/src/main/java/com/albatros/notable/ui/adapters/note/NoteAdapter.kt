@@ -1,9 +1,10 @@
-package com.albatros.notable.ui.adapters
+package com.albatros.notable.ui.adapters.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.albatros.notable.R
 import com.albatros.notable.databinding.NoteLayoutBinding
 import com.albatros.notable.model.data.Note
 
@@ -25,7 +26,6 @@ class NoteAdapter(
 
         var note: Note? = null
             get() = field!!
-
             set(value) {
                 field = value
                 bind(value)
@@ -36,14 +36,15 @@ class NoteAdapter(
                 with(binding) {
                     ViewCompat.setTransitionName(cardView, note.id.toString())
                     cardView.setCardBackgroundColor(note.color)
-
                     title.text = note.title
                     description.text = note.data
 
+                    if (note.finished)
+                        doneImg.setImageResource(R.drawable.ic_check)
+
                     root.setOnClickListener {
-                        try {
-                            listener.onNoteSelected(note, it)
-                        } catch (e: IllegalArgumentException) {}
+                        /* Safe navigation check */
+                        try { listener.onNoteSelected(note, it) } catch (e: IllegalArgumentException) {}
                     }
                 }
             }

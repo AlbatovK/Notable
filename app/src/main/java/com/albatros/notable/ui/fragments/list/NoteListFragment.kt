@@ -13,8 +13,8 @@ import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentListBinding
 import com.albatros.notable.domain.safeNavigate
 import com.albatros.notable.model.data.Note
-import com.albatros.notable.ui.adapters.NoteAdapter
-import com.albatros.notable.ui.adapters.NoteAdapterListener
+import com.albatros.notable.ui.adapters.note.NoteAdapter
+import com.albatros.notable.ui.adapters.note.NoteAdapterListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NoteListFragment : Fragment() {
@@ -62,7 +62,8 @@ class NoteListFragment : Fragment() {
             val direction = NoteListFragmentDirections.actionNoteListFragmentToCreatorFragment()
             findNavController().navigate(direction)
             true
-        } else -> false
+        }
+        else -> false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.albatros.notable.ui.adapters
+package com.albatros.notable.ui.adapters.note
 
 import android.view.View
 import com.albatros.notable.model.data.Note

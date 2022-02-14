@@ -22,6 +22,8 @@ data class Note(
     var date: Date = Date(),
     @ColumnInfo(name = "color")
     var color: Int = getRandomColor(),
+    @ColumnInfo(name = "finished")
+    var finished: Boolean = false,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long = 0,

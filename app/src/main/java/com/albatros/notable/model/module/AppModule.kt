@@ -16,8 +16,12 @@ private fun provideDatabase(context: Context) =
 private fun provideNoteDao(db: NoteDatabase) =
     db.getNoteDao()
 
+private fun provideSubTaskDao(db: NoteDatabase) =
+    db.getSubTaskDao()
+
 val appModule = module {
     single { provideDatabase(androidContext()) }
     single { provideNoteDao(get()) }
+    single { provideSubTaskDao(get()) }
 }
 

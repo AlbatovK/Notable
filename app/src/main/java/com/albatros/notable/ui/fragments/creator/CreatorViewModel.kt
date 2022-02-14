@@ -18,7 +18,7 @@ class CreatorViewModel(private val repo: MainRepository) : ViewModel() {
     fun processNote(title: String?, description: String?) {
         val valid = isEntryValid(title, description)
         _inputValid.value = if (valid) {
-            val item = Note(title!!, description!!)
+            val item = Note(title!!.trim(), description!!.trim())
             viewModelScope.launch { repo.insertNote(item) }
             true
         } else false

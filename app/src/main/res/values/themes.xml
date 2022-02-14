@@ -27,4 +27,22 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+    <style name="NoteCardTextStyleTitle" parent="Widget.AppCompat.TextView">
+        <item name = "android:textColor">@color/white</item>
+        <item name = "android:alpha">0.9</item>
+        <item name = "android:lineSpacingExtra">3sp</item>
+        <item name = "android:fontFamily">@font/navigo_medium</item>
+        <item name = "android:textSize">20sp</item>
+        <item name = "android:textStyle">normal</item>
+    </style>
+
+    <style name="NoteCardTextStyleData" parent="Widget.AppCompat.TextView">
+        <item name = "android:textColor">@color/white</item>
+        <item name = "android:alpha">0.8</item>
+        <item name = "android:lineSpacingExtra">3sp</item>
+        <item name = "android:fontFamily">@font/navigo_medium</item>
+        <item name = "android:textSize">16sp</item>
+        <item name = "android:textStyle">normal</item>
+    </style>
+
 </resources>

@@ -4,7 +4,7 @@
     tools:context="com.albatros.notable.ui.activities.MainActivity">
     <item
         android:id="@+id/action_add"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/ic_pen"
         android:orderInCategory="0"
         android:title="@string/new_hint"
         app:showAsAction="always" />
