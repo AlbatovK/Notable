@@ -7,22 +7,24 @@ import android.transition.TransitionInflater
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.albatros.notable.R
+import com.albatros.notable.databinding.DialogLayoutBinding
 import com.albatros.notable.databinding.FragmentDetailBinding
 import com.albatros.notable.model.data.SubTask
 import com.albatros.notable.ui.activities.MainActivity
 import com.albatros.notable.ui.adapters.task.TaskAdapter
 import com.albatros.notable.ui.adapters.task.TaskAdapterListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -89,14 +91,18 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
             list.adapter = TaskAdapter(it, listener)
             list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             ItemTouchHelper(touchCallback).attachToRecyclerView(list)
-            val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            list.addItemDecoration(dividerItemDecoration)
             lifecycleScope.launch {
-                if (container.visibility == View.INVISIBLE && addCard.visibility == View.INVISIBLE) {
+                if (container.visibility == View.INVISIBLE && it.isNotEmpty()) {
                     delay(500)
                     container.startAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha_animation))
-                    delay(1000)
                     container.visibility = View.VISIBLE
+                }
+                if (it.isEmpty() && container.visibility == View.VISIBLE) {
+                    container.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out_animation))
+                    container.visibility =  View.INVISIBLE
+                }
+                if (addCard.visibility == View.INVISIBLE) {
+                    delay(1000)
                     addCard.startAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha_animation))
                     addCard.visibility = View.VISIBLE
                 }
@@ -140,6 +146,25 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
         }
     }
 
+    private fun showOnTaskCreateDialog() {
+        val dialogBinding = DialogLayoutBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(binding.root.context).apply {
+            setView(dialogBinding.root)
+            setNegativeButton("Отмена") { it, _ -> it.cancel() }
+            setPositiveButton("Добавить") { it, _ ->
+                val title = dialogBinding.titleEditText.text.toString()
+                val task = SubTask(title.ifBlank { "Безымянная задача" }, false, arguments.arg.id)
+                viewModel.insertSubTask(task)
+                it.cancel()
+            }
+        }.create()
+        dialog.window?.let {
+            it.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.dialog_shape, activity?.theme))
+            it.attributes.verticalMargin = -0.08F
+        }
+        dialog.show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -158,13 +183,15 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
         viewModel.finished.observe(viewLifecycleOwner, onNoteFinishedObserver)
 
         with(binding) {
+            container.visibility = View.INVISIBLE
+            addCard.visibility = View.INVISIBLE
             description.text = arguments.arg.data
             title.text = arguments.arg.title
             cardView.setCardBackgroundColor(arguments.arg.color)
 
             doneImg.setOnClickListener { animateNoteFinished() }
             addCard.setOnClickListener {
-                viewModel.insertSubTask(SubTask("123", false, arguments.arg.id))
+                showOnTaskCreateDialog()
             }
         }
     }
