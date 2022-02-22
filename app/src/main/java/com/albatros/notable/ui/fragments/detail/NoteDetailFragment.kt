@@ -2,6 +2,7 @@ package com.albatros.notable.ui.fragments.detail
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.*
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +30,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
 
@@ -61,6 +64,14 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
             findNavController().navigate(direction)
             true
         }
+        R.id.share -> {
+            val intent = Intent(Intent.ACTION_SEND)
+            val shareBody = arguments.arg.title + "\n\n" + arguments.arg.data
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            startActivity(Intent.createChooser(intent, ""))
+            true
+        }
         android.R.id.home -> {
             val direction = NoteDetailFragmentDirections.actionNoteDetailFragmentToNoteListFragment()
             findNavController().navigate(direction)
@@ -91,6 +102,8 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
             list.adapter = TaskAdapter(it, listener)
             list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             ItemTouchHelper(touchCallback).attachToRecyclerView(list)
+            val decorator = DividerItemDecoration(binding.root.context, LinearLayoutManager.VERTICAL)
+            list.addItemDecoration(decorator)
             lifecycleScope.launch {
                 if (container.visibility == View.INVISIBLE && it.isNotEmpty()) {
                     delay(500)
@@ -117,6 +130,12 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
     private val onPercentCountLoadedObserver = Observer<Double> {
         with(binding) {
             percentCount.text = context?.getString(R.string.percent, it.toInt())
+        }
+    }
+
+    private val onCountChangedObserver = Observer<Pair<Int, Int>> {
+        with(binding) {
+            doneHint.text = context?.getString(R.string.done_hint, it.first, it.second)
         }
     }
 
@@ -181,6 +200,7 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
         viewModel.percentCount.observe(viewLifecycleOwner, onPercentCountLoadedObserver)
         viewModel.tasks.observe(viewLifecycleOwner, onTasksLoadedObserver)
         viewModel.finished.observe(viewLifecycleOwner, onNoteFinishedObserver)
+        viewModel.doneCount.observe(viewLifecycleOwner, onCountChangedObserver)
 
         with(binding) {
             container.visibility = View.INVISIBLE
@@ -190,9 +210,7 @@ class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
             cardView.setCardBackgroundColor(arguments.arg.color)
 
             doneImg.setOnClickListener { animateNoteFinished() }
-            addCard.setOnClickListener {
-                showOnTaskCreateDialog()
-            }
+            addCard.setOnClickListener { showOnTaskCreateDialog() }
         }
     }
 }

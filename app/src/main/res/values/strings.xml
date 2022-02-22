@@ -8,4 +8,6 @@
     <string name="exit_hint">Exit</string>
     <string name="must_hint">You must enter title</string>
     <string name="percent" >Выполнено на %1$d %%</string>
+    <string name="done_hint">Выполнено %d из %d</string>
+    <string name="detail_hint">Нажмите, чтобы увидеть детали…</string>
 </resources>

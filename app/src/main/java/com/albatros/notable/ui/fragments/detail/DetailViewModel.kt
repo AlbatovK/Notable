@@ -40,6 +40,8 @@ class DetailViewModel(private val repo: MainRepository) : ViewModel() {
             repo.deleteSubTask(task)
             loadSubTasks()
             _percentCount.value = countPercentage()
+            val tasks = repo.getTasksByNoteId(noteId)
+            _doneCount.value = Pair(tasks.count { task -> task.finished }, tasks.size)
             if (_percentCount.value == 100.0) {
                 val parent = repo.getNoteById(noteId).firstOrNull()
                 parent?.let { note -> finishNote(note) }
@@ -52,12 +54,18 @@ class DetailViewModel(private val repo: MainRepository) : ViewModel() {
 
     val percentCount: LiveData<Double> = _percentCount
 
+    private val _doneCount: MutableLiveData<Pair<Int, Int>> = MutableLiveData<Pair<Int, Int>>()
+
+    val doneCount: LiveData<Pair<Int, Int>> = _doneCount
+
     private var noteId: Long = 0
 
     fun initViewModel(id: Long) {
         this.noteId = id
         viewModelScope.launch(Dispatchers.Main) {
             _percentCount.value = countPercentage()
+            val tasks = repo.getTasksByNoteId(noteId)
+            _doneCount.value = Pair(tasks.count { task -> task.finished }, tasks.size)
         }
     }
 
@@ -68,6 +76,8 @@ class DetailViewModel(private val repo: MainRepository) : ViewModel() {
             viewModelScope.launch(Dispatchers.Main) {
                 repo.updateSubTask(it)
                 _percentCount.value = countPercentage()
+                val tasks = repo.getTasksByNoteId(noteId)
+                _doneCount.value = Pair(tasks.count { task -> task.finished }, tasks.size)
                 if (_percentCount.value == 100.0) {
                     val parent = repo.getNoteById(noteId).firstOrNull()
                     parent?.let { note -> finishNote(note) }
