@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.albatros.notable">
+    package="com.albatros.notable"
+    tools:ignore="ScopedStorage">
+
+    <!-- Camera Usage -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".model.repo.NotableApplication"
@@ -12,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Notable"
         tools:ignore="allowBackup">
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
 
         <activity
             android:name=".ui.activities.MainActivity"

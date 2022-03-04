@@ -8,14 +8,18 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/dialog_shape.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/gradient.xml" value="0.18518518518518517" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_add.xml" value="0.2203125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_baseline_camera_24.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_camera.xml" value="0.102" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_descr.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_green_check.xml" value="0.18611111111111112" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_pen.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/drawable/ic_red_cross.xml" value="0.18611111111111112" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/activity_camera.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/dialog_layout.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_camera.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_creator.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Notable/app/src/main/res/layout/fragment_first.xml" value="0.20416666666666666" />

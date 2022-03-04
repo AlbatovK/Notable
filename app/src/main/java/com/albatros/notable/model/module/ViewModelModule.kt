@@ -1,5 +1,6 @@
 package com.albatros.notable.model.module
 
+import com.albatros.notable.ui.fragments.camera.CameraViewModel
 import com.albatros.notable.ui.fragments.creator.CreatorViewModel
 import com.albatros.notable.ui.fragments.detail.DetailViewModel
 import com.albatros.notable.ui.fragments.list.ListViewModel
@@ -12,4 +13,5 @@ val viewModelModule = module {
     viewModel { CreatorViewModel(get()) }
     viewModel { DetailViewModel(get()) }
     viewModel { UpdaterViewModel(get()) }
+    viewModel { CameraViewModel() }
 }

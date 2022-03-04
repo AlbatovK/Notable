@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentCreatorBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,6 +17,7 @@ class CreatorFragment : Fragment() {
 
     private lateinit var binding: FragmentCreatorBinding
     private val viewModel: CreatorViewModel by viewModel()
+    private val args by navArgs<CreatorFragmentArgs>()
 
     private val onValidStateChangedObserver = Observer<Boolean> {
         with(binding) {
@@ -33,6 +35,14 @@ class CreatorFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            titleEditText.setText(args.title)
+            descriptionEditText.setText(args.data)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_creator, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -41,6 +51,11 @@ class CreatorFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_create -> {
             sendNoteData()
+            true
+        }
+        R.id.action_to_camera -> {
+            val direction = CreatorFragmentDirections.actionCreatorFragmentToCameraFragment()
+            findNavController().navigate(direction)
             true
         }
         android.R.id.home -> {
@@ -70,9 +85,11 @@ class CreatorFragment : Fragment() {
     ): View {
         setHasOptionsMenu(true)
         binding = FragmentCreatorBinding.inflate(inflater, container, false)
+        postponeEnterTransition()
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
         viewModel.inputValid.observe(viewLifecycleOwner, onValidStateChangedObserver)
+        startPostponedEnterTransition()
         return binding.root
     }
 }

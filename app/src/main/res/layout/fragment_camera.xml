@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/captureBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="100dp"
+        android:layout_gravity="bottom|center"
+        android:src="@drawable/ic_focus"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="Нажмите, чтобы обработать изображение"
+        style="@style/NoteCardTextStyleData"
+        android:layout_gravity="bottom|center"
+        android:textAlignment="center" />
+
+</FrameLayout>

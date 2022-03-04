@@ -6,6 +6,18 @@
     app:startDestination="@id/NoteListFragment">
 
     <fragment
+        android:id="@+id/CameraFragment"
+        android:name="com.albatros.notable.ui.fragments.camera.CameraFragment"
+        android:label="Text Preview"
+        tools:layout="@layout/fragment_camera">
+
+        <action
+            android:id="@+id/action_CameraFragment_to_CreatorFragment"
+            app:destination="@+id/CreatorFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/NoteListFragment"
         android:name="com.albatros.notable.ui.fragments.list.NoteListFragment"
         android:label="@string/first_fragment_label"
@@ -47,9 +59,23 @@
         android:label="@string/creator_fragment_label"
         tools:layout="@layout/fragment_creator">
 
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="" />
+
         <action
             android:id="@+id/action_CreatorFragment_to_NoteListFragment"
             app:destination="@id/NoteListFragment" />
+
+        <action
+            android:id="@+id/action_CreatorFragment_to_CameraFragment"
+            app:destination="@+id/CameraFragment" />
+
+        <argument
+            android:name="data"
+            app:argType="string"
+            android:defaultValue="" />
 
     </fragment>
 

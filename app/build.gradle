@@ -83,6 +83,19 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
+
+    /* noinspection GradleDependency */
+    implementation "androidx.camera:camera-core:$camerax_version"
+    /* noinspection GradleDependency */
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    /* noinspection GradleDependency */
+    implementation "androidx.camera:camera-view:1.0.0-alpha09"
+    /* noinspection GradleDependency */
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha09"
+    /* noinspection GradleDependency */
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+
     /* Unused */
     implementation("com.ericktijerou.koleton:koleton:1.0.0-beta01")
     implementation("com.facebook.shimmer:shimmer:0.5.0")

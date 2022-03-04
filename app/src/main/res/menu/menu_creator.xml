@@ -7,4 +7,11 @@
         android:orderInCategory="0"
         android:title="@string/new_hint"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_to_camera"
+        android:icon="@drawable/ic_camera"
+        android:orderInCategory="1"
+        android:title="@string/new_hint"
+        app:showAsAction="ifRoom" />
 </menu>
