@@ -1,7 +1,9 @@
 package com.albatros.notable.ui.adapters.note
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.albatros.notable.R
@@ -39,6 +41,8 @@ class NoteAdapter(
                     title.text = note.title
                     description.text = note.data
 
+                    cardView.startAnimation(AnimationUtils.loadAnimation(binding.root.context, R.anim.alpha_animation))
+                    cardView.visibility = View.VISIBLE
                     if (note.finished)
                         doneImg.setImageResource(R.drawable.ic_check)
 

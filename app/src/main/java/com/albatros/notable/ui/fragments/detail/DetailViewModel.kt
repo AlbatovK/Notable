@@ -20,6 +20,7 @@ class DetailViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     fun insertSubTask(task: SubTask) {
+        _doneCount.value = Pair(_doneCount.value?.first ?: 0, (_doneCount.value?.second ?: 0) + 1)
         viewModelScope.launch(Dispatchers.Main) {
             repo.insertSubTask(task)
             loadSubTasks()

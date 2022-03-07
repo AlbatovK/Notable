@@ -5,6 +5,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.core.CameraSelector.LENS_FACING_BACK
@@ -12,9 +13,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentCameraBinding
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CameraFragment : Fragment() {
@@ -37,13 +42,25 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
-    private val onImageStateChangedObserver= Observer<CameraViewModel.AnalysisState> {
+    private val onImageStateChangedObserver = Observer<CameraViewModel.AnalysisState> {
         when(it) {
             is CameraViewModel.AnalysisState.Success -> {
-                val direction = CameraFragmentDirections.actionCameraFragmentToCreatorFragment(data = it.data.text)
-                findNavController().navigate(direction)
+                cameraProvider.unbindAll()
+                lifecycleScope.launch {
+                    with(binding) {
+                        captureBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out_animation))
+                        cameraHint.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out_animation))
+                        captureBtn.visibility = View.INVISIBLE
+                        cameraHint.visibility = View.INVISIBLE
+                    }
+                    delay(600)
+                    val title = it.data.textBlocks.firstOrNull()?.text ?: ""
+                    val direction = CameraFragmentDirections.actionCameraFragmentToCreatorFragment(title, it.data.text)
+                    findNavController().navigate(direction)
+                }
             }
             is CameraViewModel.AnalysisState.Error -> {
+                cameraProvider.unbindAll()
                 Toast.makeText(binding.root.context, it.exception.localizedMessage, Toast.LENGTH_SHORT).show()
                 val direction = CameraFragmentDirections.actionCameraFragmentToCreatorFragment()
                 findNavController().navigate(direction)
@@ -54,7 +71,9 @@ class CameraFragment : Fragment() {
         }
     }
 
+
     private val callback = object: ImageCapture.OnImageCapturedCallback() {
+        @androidx.camera.core.ExperimentalGetImage
         override fun onCaptureSuccess(image: ImageProxy) {
             viewModel.analyzeImage(image)
             viewModel.analysisState.observe(viewLifecycleOwner, onImageStateChangedObserver)

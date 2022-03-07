@@ -10,9 +10,7 @@ import com.google.mlkit.vision.text.Text
 
 class CameraViewModel : ViewModel() {
 
-    private var _analysisState: MutableLiveData<AnalysisState> = MutableLiveData<AnalysisState>().apply {
-        AnalysisState.Processing(null)
-    }
+    private var _analysisState: MutableLiveData<AnalysisState> = MutableLiveData<AnalysisState>()
 
     val analysisState: LiveData<AnalysisState> = _analysisState
 
@@ -29,6 +27,7 @@ class CameraViewModel : ViewModel() {
         override fun onComplete(task: Task<Text>) { _analysisState.value = AnalysisState.Complete(task) }
     }
 
+    @androidx.camera.core.ExperimentalGetImage
     fun analyzeImage(proxy: ImageProxy) {
         _analysisState.value = AnalysisState.Processing(proxy)
         val analyzer = ImageAnalyzer(listener)

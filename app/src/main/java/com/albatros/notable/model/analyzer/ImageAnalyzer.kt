@@ -1,6 +1,5 @@
 package com.albatros.notable.model.analyzer
 
-import android.annotation.SuppressLint
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.android.gms.tasks.Task
@@ -17,7 +16,7 @@ class ImageAnalyzer(private val listener: AnalyzerListener) : ImageAnalysis.Anal
         fun onComplete(task: Task<Text>)
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
+    @androidx.camera.core.ExperimentalGetImage
     override fun analyze(imageProxy: ImageProxy) {
         imageProxy.image?.let { img ->
             val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)

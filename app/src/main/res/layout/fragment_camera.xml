@@ -23,6 +23,7 @@
         android:layout_margin="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:id="@+id/camera_hint"
         android:text="Нажмите, чтобы обработать изображение"
         style="@style/NoteCardTextStyleData"
         android:layout_gravity="bottom|center"
