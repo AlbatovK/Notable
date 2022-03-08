@@ -1,5 +1,7 @@
 package com.albatros.notable.ui.fragments.camera
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.albatros.notable.R
 import com.albatros.notable.databinding.FragmentCameraBinding
+import com.albatros.notable.ui.activities.MainActivity
 import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,6 +36,10 @@ class CameraFragment : Fragment() {
 
     private val viewModel: CameraViewModel by viewModel()
 
+    companion object {
+        private const val permissions_code = 1001
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +47,17 @@ class CameraFragment : Fragment() {
     ): View {
         binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    private fun hasPermissions(): Boolean {
+        return ContextCompat.checkSelfPermission(binding.root.context,
+            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestCameraPermissions() {
+        val permissions = arrayOf(Manifest.permission.CAMERA)
+        @Suppress("deprecation")
+        requestPermissions(permissions, permissions_code)
     }
 
     private val onImageStateChangedObserver = Observer<CameraViewModel.AnalysisState> {
@@ -71,6 +89,21 @@ class CameraFragment : Fragment() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        (activity as MainActivity).onUserInteraction()
+        if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED } ) {
+            setupCameraUI()
+        } else {
+            val direction = CameraFragmentDirections.actionCameraFragmentToCreatorFragment()
+            findNavController().navigate(direction)
+        }
+        @Suppress("deprecation")
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 
     private val callback = object: ImageCapture.OnImageCapturedCallback() {
         @androidx.camera.core.ExperimentalGetImage
@@ -103,9 +136,7 @@ class CameraFragment : Fragment() {
        cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, imageCapture)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
+    private fun setupCameraUI() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(binding.root.context)
         val executor = ContextCompat.getMainExecutor(binding.root.context)
         cameraProviderFuture.addListener( {
@@ -120,9 +151,20 @@ class CameraFragment : Fragment() {
             captureImage()
             imageCapture.takePicture(ContextCompat.getMainExecutor(context), callback)
         }
-
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
         startPostponedEnterTransition()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        if (!hasPermissions()) {
+            requestCameraPermissions()
+            sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(android.R.transition.move)
+            startPostponedEnterTransition()
+            return
+        } else setupCameraUI()
     }
 }
