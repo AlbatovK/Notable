@@ -11,7 +11,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { ListViewModel(get()) }
     viewModel { CreatorViewModel(get()) }
-    viewModel { DetailViewModel(get()) }
+    viewModel { parameters -> DetailViewModel(parameters.get(), get()) }
     viewModel { UpdaterViewModel(get()) }
     viewModel { CameraViewModel() }
 }

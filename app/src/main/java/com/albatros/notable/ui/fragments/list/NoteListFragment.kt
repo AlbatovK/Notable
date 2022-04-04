@@ -1,8 +1,11 @@
 package com.albatros.notable.ui.fragments.list
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +19,7 @@ import com.albatros.notable.model.data.Note
 import com.albatros.notable.ui.adapters.note.NoteAdapter
 import com.albatros.notable.ui.adapters.note.NoteAdapterListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class NoteListFragment : Fragment() {
 
@@ -50,7 +54,43 @@ class NoteListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        val listener = object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                viewModel.loadNotesList()
+                return true
+            }
+
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                return true
+            }
+        }
+
+        menu.findItem(R.id.action_search).setOnActionExpandListener(listener)
+
+        searchView.setOnCloseListener {
+            viewModel.loadNotesList()
+            true
+        }
+
+        val queryListener = object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { viewModel.fetchByTopics(query) }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        }
+
+        searchView.setOnQueryTextListener(queryListener)
+        val manager = context?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val info = manager.getSearchableInfo(activity?.componentName)
+        searchView.setSearchableInfo(info)
+
+        return super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/NoteListFragment"
         android:name="com.albatros.notable.ui.fragments.list.NoteListFragment"
-        android:label="@string/first_fragment_label"
+        android:label=""
         tools:layout="@layout/fragment_list">
 
         <action

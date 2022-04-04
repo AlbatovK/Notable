@@ -17,5 +17,24 @@ class ListViewModel(private val repo: MainRepository) : ViewModel() {
         }
     }
 
+    fun loadNotesList() {
+        viewModelScope.launch(Dispatchers.Main) {
+            _notes.value = repo.getNotes()
+        }
+    }
+
     val notes: LiveData<List<Note>?> = _notes
+
+    fun fetchByTopics(topics: String) {
+        val topicsList = topics.lowercase().split(" ")
+        viewModelScope.launch(Dispatchers.Main) {
+            _notes.value = repo.getNotes().filter { note ->
+                val noteWords = (note.data + " " + note.title).lowercase().trimIndent().split(" ")
+                topicsList.any {
+                    it.trim() in noteWords
+                }
+            }
+        }
+    }
+
 }

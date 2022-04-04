@@ -30,13 +30,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class NoteDetailFragment : Fragment(), MainActivity.IOnBackPressed {
 
     private lateinit var binding: FragmentDetailBinding
     private val arguments by navArgs<NoteDetailFragmentArgs>()
-    private val viewModel: DetailViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel { parametersOf(arguments.arg) }
 
     override fun onBackPressed(): Boolean {
         val direction = NoteDetailFragmentDirections.actionNoteDetailFragmentToNoteListFragment()

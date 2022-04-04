@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.albatros.notable.ui.activities.MainActivity">
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_hint"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_pen"
         android:orderInCategory="0"

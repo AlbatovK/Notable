@@ -10,7 +10,7 @@ import com.albatros.notable.model.repo.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val repo: MainRepository) : ViewModel() {
+class DetailViewModel(private val note: Note, private val repo: MainRepository) : ViewModel() {
 
     fun deleteNote(note: Note) {
         viewModelScope.launch(Dispatchers.Main) {
@@ -65,7 +65,7 @@ class DetailViewModel(private val repo: MainRepository) : ViewModel() {
         this.noteId = id
         viewModelScope.launch(Dispatchers.Main) {
             _percentCount.value = countPercentage()
-            val tasks = repo.getTasksByNoteId(noteId)
+            val tasks = repo.getTasksByNoteId(note.id)
             _doneCount.value = Pair(tasks.count { task -> task.finished }, tasks.size)
         }
     }
